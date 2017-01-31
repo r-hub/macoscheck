@@ -121,7 +121,7 @@ create_user() {
 }
 
 download_package() {
-  curl -OL "${url}"
+  curl -L -o "$package" "${url}"
 }
 
 setup_home() {

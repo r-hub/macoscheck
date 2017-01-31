@@ -41,7 +41,6 @@ install_package_deps() {
 
 run_check() {
     R CMD check -l ~/R $filename
-    # TODO
 }
 
 [[ "$0" == "$BASH_SOURCE" ]] && ( main "$@" )
