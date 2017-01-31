@@ -43,7 +43,7 @@ install_package_deps() {
     R -q -e 'source("install-github.R")$value("r-pkgs/remotes")'
 
     # And the dependencies
-    R -q -e "remotes::install_local('${pkgname}', dependencies = TRUE, INSTALL_options = '--build')"
+    R -q -e "remotes::install_local('${filename}', dependencies = TRUE, INSTALL_options = '--build')"
 }
 
 run_check() {
