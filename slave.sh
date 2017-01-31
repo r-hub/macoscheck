@@ -8,6 +8,9 @@ main() {
     # Everything relative to user's HOME
     cd
 
+    # This is not in the PATH by default, it is here or there
+    export PATH=$PATH:/Library/TeX/texbin:/usr/texbin
+
     echo "Setting up R environment"
     setup_r_environment
 
