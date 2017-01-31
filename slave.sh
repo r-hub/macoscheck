@@ -30,6 +30,10 @@ setup_r_environment() {
     R -q -e "source('https://bioconductor.org/biocLite.R')"
     echo >> .Rprofile 'options(repos = BiocInstaller::biocinstallRepos())'
     echo >> .Rprofile 'unloadNamespace("BiocInstaller")'
+
+    # locales
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
 }
 
 install_package_deps() {
