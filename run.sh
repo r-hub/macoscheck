@@ -17,16 +17,16 @@ main() {
 
   echo "Downloading package"
   download_package
-  local packagefile=$(basename "${url}")
 
   echo "Setting up home directory"
-  setup_home "${username}" "${homedir}" "${packagefile}"
+  setup_home "${username}" "${homedir}" "${package}"
 
   echo "Querying R version"
   local realrversion=$(get_r_version "${rversion}")
 
   echo "Running check"
-  run_check "${username}" "${packagefile}" "${package}" "${realrversion}"
+  local pkgname=$(echo ${package} | cut -d"_" -f1)
+  run_check "${username}" "${package}" "${pkgname}" "${realrversion}"
 
   echo "Saving artifacts"
   save_artifacts
