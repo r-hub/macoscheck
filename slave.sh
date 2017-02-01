@@ -11,6 +11,10 @@ main() {
     # This is not in the PATH by default, it is here or there
     export PATH=$PATH:/Library/TeX/texbin:/usr/texbin
 
+    # Set R temporary directory
+    mkdir $HOME/Rtemp
+    export TMPDIR=$HOME/Rtemp
+
     echo "Setting up R environment"
     setup_r_environment
 
