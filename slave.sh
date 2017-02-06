@@ -8,6 +8,9 @@ main() {
     # Everything relative to user's HOME
     cd
 
+    # Set up environment variables, check arguments
+    source rhub-env.sh
+
     # This is not in the PATH by default, it is here or there
     export PATH=$PATH:/Library/TeX/texbin:/usr/texbin
 
@@ -67,7 +70,7 @@ cleanup_xvfb() {
 }
 
 run_check() {
-    R CMD check -l ~/R $filename
+    R CMD check $checkArgs -l ~/R $filename
 }
 
 [[ "$0" == "$BASH_SOURCE" ]] && ( main "$@" )

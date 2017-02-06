@@ -20,6 +20,8 @@ main() {
 
   echo "Setting up home directory"
   setup_home "${username}" "${homedir}" "${package}"
+  echo "checkArgs=${checkArgs}" > "${homedir}/rhub-env.sh"
+  echo "${envVars}" >> "${homedir}/rhub-env.sh"
 
   echo "Querying R version"
   local realrversion=$(get_r_version "${rversion}")
