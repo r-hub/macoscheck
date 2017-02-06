@@ -29,7 +29,7 @@ main() {
   run_check "${username}" "${package}" "${pkgname}" "${realrversion}"
 
   echo "Saving artifacts"
-  save_artifacts
+  save_artifacts "${jobid}" "${homedir}" "${pkgname}"
 
   # Cleanup is automatic
 }
@@ -164,8 +164,10 @@ run_check() {
 }
 
 save_artifacts() {
-  true
-  # TODO
+    declare jobid="${1-}" homedir="${2-}" pkgname="${3-}"
+    mkdir -p "${jobid}"
+    cp -r "${homedir}/${pkgname}.Rcheck" "${jobid}" || true
+    cp -r "${homedir}/"*.tgz "${jobid}" || true
 }
 
 # Cleanup user, including home directory, arguments are global,
