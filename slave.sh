@@ -18,11 +18,17 @@ main() {
     echo "Setting up R environment"
     setup_r_environment
 
+    echo "Setting up Xvfb"
+    setup_xvfb
+
     echo "Installing package dependencies"
     install_package_deps
 
     echo "Running check"
     run_check
+
+    echo "Cleaning up Xvfb"
+    cleanup_xvfb
 }
 
 setup_r_environment() {
@@ -48,6 +54,16 @@ install_package_deps() {
 
     # And the dependencies
     R -q -e "remotes::install_local('${filename}', dependencies = TRUE, INSTALL_opts = '--build')"
+}
+
+setup_xvfb() {
+    # Random display between 1 and 100
+    export DISPLAY=":$(($RANDOM / 331 + 1))"
+    /opt/X11/bin/Xvfb "${DISPLAY}" -screen 0 1024x768x24 &
+}
+
+cleanup_xvfb() {
+    killall -9 Xvfb || true
 }
 
 run_check() {
