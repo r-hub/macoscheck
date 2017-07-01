@@ -12,7 +12,7 @@ main() {
     source rhub-env.sh
 
     # This is not in the PATH by default, it is here or there
-    export PATH=$PATH:/Library/TeX/texbin:/usr/texbin
+    export PATH=$PATH:/Library/TeX/texbin:/usr/texbin:/usr/local/bin
 
     # Set R temporary directory
     mkdir $HOME/Rtemp
