@@ -24,10 +24,10 @@ main() {
     echo "Setting up Xvfb"
     setup_xvfb
 
-    echo "Installing package dependencies"
+    echo ">>>>>============== Installing package dependencies"
     install_package_deps
 
-    echo "Running check"
+    echo ">>>>>============== Running R CMD check"
     run_check
 
     echo "Cleaning up Xvfb"

@@ -12,13 +12,13 @@ main() {
   username=$(random_username)
   homedir="/Users/${username}"
 
-  echo "Creating user ${username}"
+  echo ">>>>>============== Creating user ${username}"
   create_user "${username}" "${password}" "${homedir}"
 
-  echo "Downloading package"
+  echo ">>>>>============== Downloading package"
   download_package
 
-  echo "Setting up home directory"
+  echo ">>>>>============== Setting up home directory"
   setup_home "${username}" "${homedir}" "${package}"
   echo "checkArgs=${checkArgs}" > "${homedir}/rhub-env.sh"
   echo "${envVars}" >> "${homedir}/rhub-env.sh"
@@ -26,7 +26,7 @@ main() {
   echo "Querying R version"
   local realrversion=$(get_r_version "${rversion}")
 
-  echo "Running check"
+  echo ">>>>>============== Running check"
   local pkgname=$(echo ${package} | cut -d"_" -f1)
   run_check "${username}" "${package}" "${pkgname}" "${realrversion}"
 
