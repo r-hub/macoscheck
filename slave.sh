@@ -29,6 +29,7 @@ main() {
 
     echo ">>>>>============== Running R CMD check"
     run_check
+    echo ">>>>>============== Done with R CMD check"
 
     echo "Cleaning up Xvfb"
     cleanup_xvfb
