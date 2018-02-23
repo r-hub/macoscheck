@@ -8,8 +8,12 @@ main() {
     # Everything relative to user's HOME
     cd
 
-    # Set up environment variables, check arguments
+    # Set up environment variables
+    # We need to export them, because R will run in a sub-shell
+    # The rhubdummy variable is there, in case rhub-env.sh is empty,
+    # and then export would just list the exported variables
     source rhub-env.sh
+    export rhubdummy $(cut -f1 -d= < rhub-env.sh)
 
     # This is not in the PATH by default, it is here or there
     export PATH=$PATH:/Library/TeX/texbin:/usr/texbin:/usr/local/bin
