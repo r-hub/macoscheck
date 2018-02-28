@@ -8,6 +8,9 @@ main() {
     # Everything relative to user's HOME
     cd
 
+    # Allow falling back to source packages, unless the user overrides
+    export R_COMPILE_AND_INSTALL_PACKAGES=always
+
     # Set up environment variables
     # We need to export them, because R will run in a sub-shell
     # The rhubdummy variable is there, in case rhub-env.sh is empty,
