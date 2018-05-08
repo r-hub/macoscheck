@@ -37,7 +37,8 @@ main() {
   local realrversion=$(get_r_version "${rversion}")
 
   echo ">>>>>============== Running check"
-  run_check "${username}" "${package}" "${pkgname}" "${realrversion}"
+  run_check "${username}" "${package}" "${pkgname}" "${realrversion}" \
+	    "${build}"
 
   echo "Saving artifacts"
   save_artifacts "${jobid}" "${homedir}" "${pkgname}"
@@ -169,9 +170,10 @@ get_r_version() {
 }
 
 run_check() {
-  declare username="${1-}" filename="${2-}" pkgname="${3-}" rversion="${4-}"
-  su -l "${username}" \
-     -c "cd $(pwd); ./slave.sh ${filename} ${pkgname} ${rversion} ${build}" || true
+    declare username="${1-}" filename="${2-}" pkgname="${3-}" \
+	    rversion="${4-}" build="${5-}"
+    su -l "${username}" \
+       -c "cd \"$(pwd)\"; ./slave.sh \"${filename}\" \"${pkgname}\" \"${rversion}\" \"${build}\"" || true
 }
 
 save_artifacts() {
