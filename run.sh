@@ -4,13 +4,23 @@ set -euo pipefail
 
 main() {
   declare package="${1-}" jobid="${2-}" url="${3-}" rversion=${4-} \
-          checkArgs="${5-}" envVars="${6-}"
+          checkArgs="${5-}" envVars="${6-}" build="${7-}" pkgname="${8-}"
 
   trap cleanup 0
 
   local password=$(random_password)
   username=$(random_username)
   homedir="/Users/${username}"
+
+  if [[ -z "$build" ]]; then build="false"; fi
+  if [[ -z "$pkgname" ]]; then
+      local pkgname=$(echo ${package} | cut -d"_" -f1)
+  fi
+
+  if [[ ! $pkgname =~ ^[a-zA-Z0-9\.]+$ ]]; then
+      >&2 echo "Invalid package name"
+      exit 1;
+  fi
 
   echo ">>>>>============== Creating user ${username}"
   create_user "${username}" "${password}" "${homedir}"
@@ -26,9 +36,8 @@ main() {
   echo "Querying R version"
   local realrversion=$(get_r_version "${rversion}")
 
-  echo ">>>>>============== Running check"
-  local pkgname=$(echo ${package} | cut -d"_" -f1)
-  run_check "${username}" "${package}" "${pkgname}" "${realrversion}"
+  run_check "${username}" "${package}" "${pkgname}" "${realrversion}" \
+	    "${build}"
 
   echo "Saving artifacts"
   save_artifacts "${jobid}" "${homedir}" "${pkgname}"
@@ -130,7 +139,7 @@ setup_home() {
   declare username="${1-}" homedir="${2-}" package="${3-}"
   mkdir "${homedir}"
   cp "${package}" "${homedir}"
-  chown "${username}":600 "${homedir}"
+  chown -R "${username}":600 "${homedir}"
   chmod 700 "${homedir}"
 }
 
@@ -160,16 +169,18 @@ get_r_version() {
 }
 
 run_check() {
-  declare username="${1-}" filename="${2-}" pkgname="${3-}" rversion="${4-}"
-  su -l "${username}" \
-    -c "cd $(pwd); ./slave.sh ${filename} ${pkgname} ${rversion}" || true
+    declare username="${1-}" filename="${2-}" pkgname="${3-}" \
+	    rversion="${4-}" build="${5-}"
+    su -l "${username}" \
+       -c "cd \"$(pwd)\"; ./slave.sh \"${filename}\" \"${pkgname}\" \"${rversion}\" \"${build}\"" || true
 }
 
 save_artifacts() {
     declare jobid="${1-}" homedir="${2-}" pkgname="${3-}"
     mkdir -p "${jobid}"
-    cp -r "${homedir}/${pkgname}.Rcheck" "${jobid}" || true
+    cp -r "${homedir}/"*.Rcheck "${jobid}" || true
     cp -r "${homedir}/"*.tgz "${jobid}" || true
+    cp -r "${homedir}/$pkgname"*_*.tar.gz "${jobid}" || true
 }
 
 # Cleanup user, including home directory, arguments are global,

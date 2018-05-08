@@ -3,7 +3,8 @@
 set -euo pipefail
 
 main() {
-    declare filename="${1-}" pkgname="${2-}" rversion="${3-}"
+    declare filename="${1-}" pkgname="${2-}" rversion="${3-}" \
+	    build="${4-}"
 
     # Everything relative to user's HOME
     cd
@@ -30,6 +31,17 @@ main() {
 
     echo "Setting up Xvfb"
     setup_xvfb
+
+    if [[ "$build" == "true" ]]; then
+	echo ">>>>>============== Running R CMD build"
+	mkdir build
+	cd build
+	tar xzf "../$filename"
+	R CMD build "${pkgname}"
+	filename=$(ls *.tar.gz | head -1)
+	cp "${filename}" ..
+	cd ..
+    fi
 
     echo ">>>>>============== Installing package dependencies"
     install_package_deps
