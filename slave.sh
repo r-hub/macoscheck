@@ -12,6 +12,11 @@ main() {
     # Allow falling back to source packages, unless the user overrides
     export R_COMPILE_AND_INSTALL_PACKAGES=always
 
+    # Remotes config, do not use extra packages, do not error out on
+    # warnings
+    export R_REMOTES_STANDALONE=true
+    export R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
+
     # Set up environment variables
     # We need to export them, because R will run in a sub-shell
     # The rhubdummy variable is there, in case rhub-env.sh is empty,
@@ -72,8 +77,8 @@ setup_r_environment() {
 install_package_deps() {
     # We download install-github.R first, in case the R version does not
     # support HTTPS. Then we install the proper 'remotes' package
-    curl -OL https://raw.githubusercontent.com/r-pkgs/remotes/master/install-github.R
-    R -q -e 'source("install-github.R")$value("r-pkgs/remotes")'
+    curl -OL https://raw.githubusercontent.com/r-pkgs/remotes/r-hub/install-github.R
+    R -q -e 'source("install-github.R")$value("r-pkgs/remotes@r-hub")'
 
     # And the dependencies
     R -q -e "remotes::install_local('${filename}', dependencies = TRUE, INSTALL_opts = '--build')"
