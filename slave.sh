@@ -61,7 +61,7 @@ main() {
 
 setup_r_environment() {
     mkdir -p R
-    echo >> .Rprofile 'options(repos = c(CRAN = "https://cran.r-hub.io"))'
+    echo >> .Rprofile 'options(repos = c(CRAN = "https://cloud.r-project.org"))'
     echo >> .Rprofile '.libPaths("~/R")'
 
     # BioC
