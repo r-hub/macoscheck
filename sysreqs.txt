@@ -4,6 +4,7 @@ cairo
 cmake
 dcraw
 exiftool
+ffmpeg
 fftw
 freetype
 gdal
@@ -12,13 +13,10 @@ gpgme
 gtk+
 hdf5
 hiredis
-imagej
 imagemagick@6
-insighttoolkit
 jags
 libarchive
 libav
-libbsd
 berkeley-db
 geos
 gmp
@@ -38,7 +36,6 @@ libtiff
 udunits
 libxslt
 monetdb
-mongodb
 mariadb-connector-c
 mysql
 netcdf
@@ -53,10 +50,8 @@ pkg-config
 poppler
 protobuf
 protobuf@3.7
-qgis2
 redland
 rust
-saga-gis-lts
 libsodium
 swftools
 tcl-tk
