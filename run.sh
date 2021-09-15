@@ -49,7 +49,8 @@ main() {
 random_string() {
   declare n="${1-}"
   if [[ -z "$n" ]]; then echo no random string length; return 1; fi
-  cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w ${n} | head -n 1
+  # We could use LC_CTYPE, but that fails on Big Sur
+  cat /dev/urandom | env LC_ALL=C tr -dc 'a-zA-Z0-9' | fold -w ${n} | head -n 1
 }
 
 random_username() {
