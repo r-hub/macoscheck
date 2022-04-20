@@ -24,6 +24,9 @@ main() {
     source rhub-env.sh
     export rhubdummy $(cut -f1 -d= < rhub-env.sh)
 
+    # M1 also needs this
+    export PATH=/opt/R/arm64/bin:$PATH
+
     # This is not in the PATH by default, it is here or there
     export PATH=$PATH:/Library/TeX/texbin:/usr/texbin:/usr/local/bin
 
